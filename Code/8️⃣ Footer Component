@@ -1,0 +1,13 @@
+import styles from '../styles/Header.module.css';
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <p>&copy; {year} Faculty Development Program Booking System. All rights reserved.</p>
+        <p>Contact: fdp@university.edu | Phone: +1-800-FDP-PROG</p>
+      </div>
+    </footer>
+  );
+}
