@@ -1,0 +1,170 @@
+// Mock FDP Data
+export const fdpPrograms = [
+  {
+    id: 1,
+    title: "Advanced React Development",
+    description: "Master advanced React concepts including hooks, context API, and performance optimization.",
+    instructor: "Dr. Sarah Johnson",
+    date: "2024-03-15",
+    time: "10:00 AM - 1:00 PM",
+    duration: "3 hours",
+    location: "Conference Room A",
+    capacity: 30,
+    registered: 24,
+    fee: "Free",
+    category: "Web Development",
+    level: "Advanced",
+    image: "https://picsum.photos/400/300?random=1",
+    syllabus: [
+      "React Hooks Deep Dive",
+      "Context API & State Management",
+      "Performance Optimization",
+      "Code Splitting & Lazy Loading",
+      "Custom Hooks Creation"
+    ],
+    requirements: [
+      "Basic React knowledge",
+      "JavaScript ES6+",
+      "Node.js installed"
+    ]
+  },
+  {
+    id: 2,
+    title: "Docker Containerization Mastery",
+    description: "Learn Docker from basics to production deployment with best practices.",
+    instructor: "Mr. James Wilson",
+    date: "2024-03-20",
+    time: "2:00 PM - 5:00 PM",
+    duration: "3 hours",
+    location: "Lab Room 101",
+    capacity: 25,
+    registered: 18,
+    fee: "Free",
+    category: "DevOps",
+    level: "Intermediate",
+    image: "https://picsum.photos/400/300?random=2",
+    syllabus: [
+      "Docker Basics & Installation",
+      "Building Docker Images",
+      "Container Management",
+      "Docker Networking",
+      "Docker Compose"
+    ],
+    requirements: [
+      "Linux command line basics",
+      "Basic networking knowledge",
+      "Docker installed"
+    ]
+  },
+  {
+    id: 3,
+    title: "Python Data Science Fundamentals",
+    description: "Introduction to data science with Python, NumPy, Pandas, and Matplotlib.",
+    instructor: "Dr. Emily Chen",
+    date: "2024-03-25",
+    time: "10:00 AM - 1:00 PM",
+    duration: "3 hours",
+    location: "Computer Lab B",
+    capacity: 35,
+    registered: 32,
+    fee: "Free",
+    category: "Data Science",
+    level: "Beginner",
+    image: "https://picsum.photos/400/300?random=3",
+    syllabus: [
+      "Python Basics for Data Science",
+      "NumPy Arrays & Operations",
+      "Pandas DataFrames",
+      "Data Visualization with Matplotlib",
+      "Basic Statistics"
+    ],
+    requirements: [
+      "Python 3.x installed",
+      "Basic programming knowledge"
+    ]
+  },
+  {
+    id: 4,
+    title: "Kubernetes Orchestration",
+    description: "Deploy, manage, and scale containerized applications with Kubernetes.",
+    instructor: "Mr. Robert Kumar",
+    date: "2024-04-05",
+    time: "1:00 PM - 4:00 PM",
+    duration: "3 hours",
+    location: "Conference Room C",
+    capacity: 20,
+    registered: 15,
+    fee: "Free",
+    category: "Cloud",
+    level: "Advanced",
+    image: "https://picsum.photos/400/300?random=4",
+    syllabus: [
+      "Kubernetes Architecture",
+      "Pods & Deployments",
+      "Services & Networking",
+      "Persistent Volumes",
+      "Helm Charts"
+    ],
+    requirements: [
+      "Docker knowledge required",
+      "Basic Linux skills",
+      "kubectl installed"
+    ]
+  },
+  {
+    id: 5,
+    title: "Web Security Best Practices",
+    description: "Comprehensive guide to securing web applications against common threats.",
+    instructor: "Dr. Michael Brown",
+    date: "2024-04-10",
+    time: "3:00 PM - 6:00 PM",
+    duration: "3 hours",
+    location: "Security Lab",
+    capacity: 25,
+    registered: 20,
+    fee: "Free",
+    category: "Security",
+    level: "Intermediate",
+    image: "https://picsum.photos/400/300?random=5",
+    syllabus: [
+      "OWASP Top 10",
+      "Authentication & Authorization",
+      "SSL/TLS Configuration",
+      "SQL Injection Prevention",
+      "CORS & CSRF Protection"
+    ],
+    requirements: [
+      "Web development basics",
+      "HTTP/HTTPS knowledge",
+      "Basic networking"
+    ]
+  },
+  {
+    id: 6,
+    title: "CI/CD Pipeline Development",
+    description: "Build automated continuous integration and deployment pipelines.",
+    instructor: "Ms. Lisa Anderson",
+    date: "2024-04-15",
+    time: "10:00 AM - 1:00 PM",
+    duration: "3 hours",
+    location: "DevOps Center",
+    capacity: 22,
+    registered: 19,
+    fee: "Free",
+    category: "DevOps",
+    level: "Intermediate",
+    image: "https://picsum.photos/400/300?random=6",
+    syllabus: [
+      "CI/CD Concepts",
+      "GitHub Actions",
+      "GitLab CI",
+      "Jenkins Basics",
+      "Automated Testing"
+    ],
+    requirements: [
+      "Git version control",
+      "Docker knowledge helpful",
+      "Basic programming"
+    ]
+  }
+];
