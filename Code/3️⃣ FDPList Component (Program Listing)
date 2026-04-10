@@ -1,0 +1,101 @@
+import { useState } from 'react';
+import styles from '../styles/FDPList.module.css';
+
+export default function FDPList({ programs, onSelectProgram }) {
+  const [filter, setFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const categories = ['All', ...new Set(programs.map(p => p.category))];
+
+  const filteredPrograms = programs.filter(program => {
+    const categoryMatch = filter === 'All' || program.category === filter;
+    const searchMatch = program.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       program.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return categoryMatch && searchMatch;
+  });
+
+  const getAvailabilityClass = (capacity, registered) => {
+    const percentage = (registered / capacity) * 100;
+    if (percentage >= 90) return styles.almostFull;
+    if (percentage >= 70) return styles.limited;
+    return styles.available;
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.filters}>
+        <div className={styles.searchBox}>
+          <input
+            type="text"
+            placeholder="Search programs..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className={styles.categoryFilter}>
+          <label>Category:</label>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              className={filter === cat ? styles.active : ''}
+              onClick={() => setFilter(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.programsGrid}>
+        {filteredPrograms.length > 0 ? (
+          filteredPrograms.map(program => (
+            <div key={program.id} className={styles.programCard}>
+              <img src={program.image} alt={program.title} className={styles.image} />
+              <div className={styles.content}>
+                <div className={styles.badge}>{program.level}</div>
+                <h3>{program.title}</h3>
+                <p className={styles.instructor}>by {program.instructor}</p>
+                <p className={styles.description}>{program.description}</p>
+                
+                <div className={styles.details}>
+                  <p>📅 {new Date(program.date).toLocaleDateString()}</p>
+                  <p>⏰ {program.time}</p>
+                  <p>📍 {program.location}</p>
+                </div>
+
+                <div className={styles.capacity}>
+                  <div className={styles.progressBar}>
+                    <div
+                      className={`${styles.progress} ${getAvailabilityClass(
+                        program.capacity,
+                        program.registered
+                      )}`}
+                      style={{
+                        width: `${(program.registered / program.capacity) * 100}%`
+                      }}
+                    ></div>
+                  </div>
+                  <p className={styles.seatInfo}>
+                    {program.capacity - program.registered} of {program.capacity} seats available
+                  </p>
+                </div>
+
+                <button
+                  className={styles.registerBtn}
+                  onClick={() => onSelectProgram(program)}
+                  disabled={program.registered >= program.capacity}
+                >
+                  {program.registered >= program.capacity ? 'FULL' : 'Register Now'}
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className={styles.noResults}>
+            <p>No programs found matching your criteria.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
