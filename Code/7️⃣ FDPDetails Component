@@ -1,0 +1,100 @@
+import styles from '../styles/FDPDetails.module.css';
+
+export default function FDPDetails({ program, onRegister, onBack }) {
+  if (!program) return null;
+
+  const seatsAvailable = program.capacity - program.registered;
+  const capacityPercentage = (program.registered / program.capacity) * 100;
+
+  return (
+    <div className={styles.container}>
+      <button className={styles.backBtn} onClick={onBack}>← Back to Programs</button>
+
+      <div className={styles.content}>
+        <div className={styles.imageSection}>
+          <img src={program.image} alt={program.title} />
+          <div className={styles.badgeGroup}>
+            <span className={styles.category}>{program.category}</span>
+            <span className={styles.level}>{program.level}</span>
+          </div>
+        </div>
+
+        <div className={styles.details}>
+          <h1>{program.title}</h1>
+          <p className={styles.instructor}>Instructor: {program.instructor}</p>
+
+          <div className={styles.infoGrid}>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>📅 Date:</span>
+              <span>{new Date(program.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>⏰ Time:</span>
+              <span>{program.time}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>⏱️ Duration:</span>
+              <span>{program.duration}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>📍 Location:</span>
+              <span>{program.location}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>💰 Fee:</span>
+              <span>{program.fee}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>👥 Participants:</span>
+              <span>{program.registered}/{program.capacity}</span>
+            </div>
+          </div>
+
+          <div className={styles.description}>
+            <h2>About This Program</h2>
+            <p>{program.description}</p>
+          </div>
+
+          <div className={styles.syllabus}>
+            <h2>Syllabus</h2>
+            <ul>
+              {program.syllabus.map((topic, idx) => (
+                <li key={idx}>{topic}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.requirements}>
+            <h2>Requirements</h2>
+            <ul>
+              {program.requirements.map((req, idx) => (
+                <li key={idx}>{req}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.capacity}>
+            <h3>Seats Available</h3>
+            <div className={styles.progressBar}>
+              <div
+                className={styles.progress}
+                style={{ width: `${capacityPercentage}%` }}
+              ></div>
+            </div>
+            <p>{seatsAvailable} of {program.capacity} seats remaining</p>
+          </div>
+
+          {seatsAvailable > 0 ? (
+            <button className={styles.registerBtn} onClick={onRegister}>
+              Register Now
+            </button>
+          ) : (
+            <button className={styles.registerBtn} disabled>
+              Program is Full
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
