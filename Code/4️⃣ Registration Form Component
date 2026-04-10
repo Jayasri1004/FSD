@@ -1,0 +1,181 @@
+import { useState } from 'react';
+import styles from '../styles/RegistrationForm.module.css';
+
+export default function RegistrationForm({ program, onSubmit, onCancel }) {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    department: '',
+    designation: '',
+    experience: '',
+    motivation: '',
+    agree: false
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.email.includes('@')) newErrors.email = 'Valid email is required';
+    if (!formData.phone.match(/^\d{10}$/)) newErrors.phone = 'Valid 10-digit phone is required';
+    if (!formData.department.trim()) newErrors.department = 'Department is required';
+    if (!formData.designation.trim()) newErrors.designation = 'Designation is required';
+    if (!formData.agree) newErrors.agree = 'You must agree to terms';
+    return newErrors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit(formData);
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h2>Register for {program.title}</h2>
+        <p className={styles.subtext}>Please fill in all required fields</p>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label>First Name *</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className={errors.firstName ? styles.error : ''}
+              />
+              {errors.firstName && <span className={styles.errorMsg}>{errors.firstName}</span>}
+            </div>
+            <div className={styles.field}>
+              <label>Last Name *</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className={errors.lastName ? styles.error : ''}
+              />
+              {errors.lastName && <span className={styles.errorMsg}>{errors.lastName}</span>}
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <label>Email Address *</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? styles.error : ''}
+            />
+            {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
+          </div>
+
+          <div className={styles.field}>
+            <label>Phone Number (10 digits) *</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="9876543210"
+              className={errors.phone ? styles.error : ''}
+            />
+            {errors.phone && <span className={styles.errorMsg}>{errors.phone}</span>}
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label>Department *</label>
+              <input
+                type="text"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className={errors.department ? styles.error : ''}
+              />
+              {errors.department && <span className={styles.errorMsg}>{errors.department}</span>}
+            </div>
+            <div className={styles.field}>
+              <label>Designation *</label>
+              <select
+                name="designation"
+                value={formData.designation}
+                onChange={handleChange}
+                className={errors.designation ? styles.error : ''}
+              >
+                <option value="">Select Designation</option>
+                <option value="Professor">Professor</option>
+                <option value="Associate Professor">Associate Professor</option>
+                <option value="Assistant Professor">Assistant Professor</option>
+                <option value="Lecturer">Lecturer</option>
+              </select>
+              {errors.designation && <span className={styles.errorMsg}>{errors.designation}</span>}
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <label>Years of Experience</label>
+            <input
+              type="number"
+              name="experience"
+              value={formData.experience}
+              onChange={handleChange}
+              min="0"
+              max="50"
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label>Motivation for Attending</label>
+            <textarea
+              name="motivation"
+              value={formData.motivation}
+              onChange={handleChange}
+              rows="4"
+              placeholder="Tell us why you're interested in this program..."
+            ></textarea>
+          </div>
+
+          <div className={styles.checkbox}>
+            <input
+              type="checkbox"
+              name="agree"
+              checked={formData.agree}
+              onChange={handleChange}
+              id="agree"
+            />
+            <label htmlFor="agree">
+              I agree to the terms and conditions and confirm my attendance *
+            </label>
+            {errors.agree && <span className={styles.errorMsg}>{errors.agree}</span>}
+          </div>
+
+          <div className={styles.actions}>
+            <button type="submit" className={styles.submitBtn}>Complete Registration</button>
+            <button type="button" className={styles.cancelBtn} onClick={onCancel}>Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
