@@ -1,0 +1,64 @@
+import { useState } from 'react';
+import FDPList from '../components/FDPList';
+import FDPDetails from '../components/FDPDetails';
+import RegistrationForm from '../components/RegistrationForm';
+import { fdpPrograms } from '../data/fdpData';
+import styles from './HomePage.module.css';
+
+export default function HomePage({ onRegistrationSuccess }) {
+  const [selectedProgram, setSelectedProgram] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleSelectProgram = (program) => {
+    setSelectedProgram(program);
+    setShowForm(false);
+  };
+
+  const handleRegister = () => {
+    setShowForm(true);
+  };
+
+  const handleFormSubmit = (formData) => {
+    // Store registration locally
+    const registration = {
+      id: Date.now(),
+      ...formData,
+      program: selectedProgram,
+      registeredAt: new Date().toISOString()
+    };
+
+    const existingRegistrations = JSON.parse(localStorage.getItem('fdpRegistrations') || '[]');
+    existingRegistrations.push(registration);
+    localStorage.setItem('fdpRegistrations', JSON.stringify(existingRegistrations));
+
+    onRegistrationSuccess(registration);
+    setSelectedProgram(null);
+    setShowForm(false);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
+  const handleBack = () => {
+    setSelectedProgram(null);
+  };
+
+  if (showForm && selectedProgram) {
+    return <RegistrationForm program={selectedProgram} onSubmit={handleFormSubmit} onCancel={handleCancel} />;
+  }
+
+  if (selectedProgram) {
+    return <FDPDetails program={selectedProgram} onRegister={handleRegister} onBack={handleBack} />;
+  }
+
+  return (
+    <div className={styles.homePage}>
+      <section className={styles.hero}>
+        <h1>Faculty Development Programs</h1>
+        <p>Enhance your skills and stay updated with latest technologies</p>
+      </section>
+      <FDPList programs={fdpPrograms} onSelectProgram={handleSelectProgram} />
+    </div>
+  );
+}
